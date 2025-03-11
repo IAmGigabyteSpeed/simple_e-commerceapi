@@ -1,5 +1,4 @@
 name: simple_e-commerceapi
-
 on:
   pull_request:
     branches: [main]

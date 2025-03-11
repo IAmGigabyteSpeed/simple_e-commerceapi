@@ -315,6 +315,8 @@ app.get("/user", JWTAuthenticate, async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT | 5000, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+module.exports = { app, server };
