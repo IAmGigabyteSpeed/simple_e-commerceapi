@@ -12,7 +12,8 @@ jobs:
     container:
       image: node:20
     steps:
-      - uses: actions/checkout@v4
-      - run: npm help
+      - uses: actions/checkout@v4.2.2
+      - name: Retrieve the MongoDB URI
+        run: echo "MONGO_URI=${{ secrets.MONGO_URI }}" > .env
       - run: npm ci
       - run: npm start
