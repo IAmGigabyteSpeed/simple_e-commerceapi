@@ -16,7 +16,7 @@ const MONGO_URI = process.env.MONGO_URI;
 const SECRET_KEY = process.env.SECRET_KEY;
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: "*" }));
 
 mongoose
   .connect(MONGO_URI)
@@ -206,6 +206,17 @@ app.delete("/products/:id", async (req, res) => {
     if (!Products) return res.status(404).json({ error: "Product not found!" });
     await Products.deleteOne();
     return res.status(200).json({ message: "Category has been deleted!" });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+app.get("/products/category/:id", async (req, res) => {
+  try {
+    const Products = await Product.find({ category: req.params.id }).populate(
+      "category"
+    );
+    return res.status(200).json(Products);
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
