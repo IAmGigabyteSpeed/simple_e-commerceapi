@@ -241,7 +241,7 @@ app.post("/transactions", JWTAuthenticate, async (req, res) => {
       product: new mongoose.Types.ObjectId(item.productId),
       quantity: item.quantity,
     }));
-    const Trans = new Transaction({
+    const Trans = new Transcation({
       user: UserId,
       products: CartItems,
       totalAmount: totalAmount,
@@ -279,9 +279,9 @@ app.get("/transactions/:userId", JWTAuthenticate, async (req, res) => {
         .status(400)
         .json({ error: "You are not allowed to check this!" });
     }
-    const Transcations = await Transcation.find({ user: req.params.userId })
-      .populate("user")
-      .populate("products.product");
+    const Transcations = await Transcation.find({
+      user: req.params.userId,
+    }).populate("products.product");
 
     return res.status(200).json(Transcations);
   } catch (error) {
